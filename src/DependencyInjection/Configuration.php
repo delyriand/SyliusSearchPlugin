@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace MonsieurBiz\SyliusSearchPlugin\DependencyInjection;
 
-use MonsieurBiz\SyliusSearchPlugin\Mapping\YamlWithLocaleProvider;
+use MonsieurBiz\SyliusSearchPlugin\Mapping\YamlMultipleFolderProvider;
 use MonsieurBiz\SyliusSearchPlugin\Model\Datasource\RepositoryDatasource;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -37,7 +37,7 @@ final class Configuration implements ConfigurationInterface
                             ->scalarNode('instant_search_enabled')->defaultValue(false)->end()
                             ->scalarNode('source')->isRequired()->cannotBeEmpty()->end()
                             ->scalarNode('target')->isRequired()->cannotBeEmpty()->end()
-                            ->scalarNode('mapping_provider')->defaultValue(YamlWithLocaleProvider::class)->end()
+                            ->scalarNode('mapping_provider')->defaultValue(YamlMultipleFolderProvider::class)->end()
                             ->scalarNode('datasource')->defaultValue(RepositoryDatasource::class)->end()
                             ->arrayNode('templates')
                                 ->addDefaultsIfNotSet()
@@ -83,6 +83,10 @@ final class Configuration implements ConfigurationInterface
                             ->prototype('scalar')->end()
                         ->end()
                     ->end()
+                ->end()
+                ->arrayNode('mapping_provider_directories')
+                    ->defaultValue([])
+                    ->prototype('scalar')->end()
                 ->end()
             ->end()
         ;

@@ -27,4 +27,5 @@ monsieurbiz_sylius_search:
       product_attribute: 'MonsieurBiz\SyliusSearchPlugin\Generated\Model\ProductAttributeDTO'
       product_variant: 'MonsieurBiz\SyliusSearchPlugin\Model\Product\VariantDTO'
       pricing: 'MonsieurBiz\SyliusSearchPlugin\Generated\Model\PricingDTO'
-
+  mapping_provider_directories:
+    - '@MonsieurBizSyliusSearchPlugin/Resources/config/elasticsearch'
