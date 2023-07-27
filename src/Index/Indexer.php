@@ -25,6 +25,8 @@ use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Locale\Model\LocaleInterface;
 use Sylius\Component\Registry\ServiceRegistryInterface;
 use Sylius\Component\Resource\Model\TranslatableInterface;
+use Symfony\Component\Console\Output\NullOutput;
+use Symfony\Component\Console\Output\OutputInterface;
 
 final class Indexer implements IndexerInterface
 {
@@ -57,14 +59,19 @@ final class Indexer implements IndexerInterface
     /**
      * Index all documentable object.
      */
-    public function indexAll(): void
+    public function indexAll(?OutputInterface $output = null): void
     {
+        $output = $output ?? new NullOutput();
         /** @var DocumentableInterface $documentable */
         foreach ($this->documentableRegistry->all() as $documentable) {
-            $this->indexDocumentable($documentable);
+            $output->writeln(sprintf('Indexing <info>%s</info>', $documentable->getIndexCode()));
+            $this->indexDocumentable($output, $documentable);
         }
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+     */
     public function indexByDocuments(DocumentableInterface $documentable, array $documents, ?string $locale = null, ?ElasticallyIndexer $indexer = null): void
     {
         if (null === $indexer) {
@@ -91,6 +98,9 @@ final class Indexer implements IndexerInterface
         }
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+     */
     public function deleteByDocuments(DocumentableInterface $documentable, array $documents, ?string $locale = null, ?ElasticallyIndexer $indexer = null): void
     {
         if (null === $indexer) {
@@ -136,11 +146,18 @@ final class Indexer implements IndexerInterface
         return $this->locales;
     }
 
-    private function indexDocumentable(DocumentableInterface $documentable, ?string $locale = null): void
+    /**
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+     */
+    private function indexDocumentable(OutputInterface $output, DocumentableInterface $documentable, ?string $locale = null): void
     {
         if (null === $locale && $documentable->isTranslatable()) {
             foreach ($this->getLocales() as $localeCode) {
-                $this->indexDocumentable($documentable, $localeCode);
+                $output->writeln(
+                    sprintf('Indexing <info>%s</info> for locale <info>%s</info>', $documentable->getIndexCode(), $localeCode),
+                    OutputInterface::VERBOSITY_VERBOSE
+                );
+                $this->indexDocumentable($output, $documentable, $localeCode);
             }
 
             return;
@@ -165,8 +182,10 @@ final class Indexer implements IndexerInterface
         $indexer->flush();
 
         $indexBuilder->markAsLive($newIndex, $indexName);
+        $output->writeln(sprintf('Index <info>%s</info> is now live', $indexName), OutputInterface::VERBOSITY_VERBOSE);
         $indexBuilder->speedUpRefresh($newIndex);
         $indexBuilder->purgeOldIndices($indexName);
+        $output->writeln(sprintf('Old indices for <info>%s</info> are now purged', $indexName), OutputInterface::VERBOSITY_VERBOSE);
     }
 
     /**
