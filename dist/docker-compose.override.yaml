@@ -4,6 +4,7 @@ services:
             context: ./docker/elasticsearch/
             args:
                 USER_UID: ${USER_UID}
+                ELASTICSEARCH_VERSION: ${ELASTICSEARCH_VERSION:-8.13.4}
         volumes:
             - esdata:/usr/share/elasticsearch/data:rw
         environment:
@@ -17,9 +18,7 @@ services:
             memlock:
                 soft: -1
                 hard: -1
-        ports:
-            - "9200:9200"
-            - "9300:9300"
+        ports: [9200, 9300]
 
 volumes:
     esdata: {}

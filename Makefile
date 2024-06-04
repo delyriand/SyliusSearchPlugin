@@ -181,6 +181,10 @@ platform: .php-version up ## Setup the platform tools
 docker.pull: ## Pull the docker images
 	cd ${APP_DIR} && ${COMPOSE} pull
 
+docker.build: ## Build (and pull) the docker images
+	cd ${APP_DIR} && ${COMPOSE} build --pull
+.PHONY: docker.build
+
 docker.up: ## Start the docker containers
 	cd ${APP_DIR} && ${COMPOSE} up -d
 .PHONY: docker.up

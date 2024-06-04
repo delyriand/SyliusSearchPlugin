@@ -1,4 +1,5 @@
-FROM docker.elastic.co/elasticsearch/elasticsearch:7.16.3
+ARG ELASTICSEARCH_VERSION
+FROM elasticsearch:${ELASTICSEARCH_VERSION}
 
 # Install ES plugins
 RUN bin/elasticsearch-plugin install analysis-phonetic
