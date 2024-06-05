@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace MonsieurBiz\SyliusSearchPlugin\AutoMapper;
 
-use Jane\Bundle\AutoMapperBundle\Configuration\MapperConfigurationInterface;
-use Jane\Component\AutoMapper\MapperGeneratorMetadataInterface;
-use Jane\Component\AutoMapper\MapperMetadata;
+use AutoMapper\Bundle\Configuration\MapperConfigurationInterface;
+use AutoMapper\MapperGeneratorMetadataInterface;
+use AutoMapper\MapperMetadata;
 use Sylius\Component\Inventory\Checker\AvailabilityCheckerInterface;
 use Sylius\Component\Inventory\Model\StockableInterface;
 use Sylius\Component\Product\Model\ProductVariantInterface;

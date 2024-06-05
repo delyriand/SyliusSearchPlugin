@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace MonsieurBiz\SyliusSearchPlugin\Index;
 
+use AutoMapper\AutoMapperInterface;
 use Doctrine\Common\Proxy\Proxy;
 use Doctrine\ORM\EntityManagerInterface;
 use Elastica\Document;
-use Jane\Component\AutoMapper\AutoMapperInterface;
 use JoliCode\Elastically\Indexer as ElasticallyIndexer;
 use MonsieurBiz\SyliusSearchPlugin\Model\Documentable\DocumentableInterface;
 use MonsieurBiz\SyliusSearchPlugin\Model\Documentable\PrefixedDocumentableInterface;

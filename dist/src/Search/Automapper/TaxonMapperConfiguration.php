@@ -14,14 +14,14 @@ declare(strict_types=1);
 namespace App\Search\Automapper;
 
 use App\Search\Model\Taxon\TaxonDTO;
+use AutoMapper\AutoMapperInterface;
+use AutoMapper\Bundle\Configuration\MapperConfigurationInterface;
+use AutoMapper\MapperGeneratorMetadataInterface;
+use AutoMapper\MapperMetadata;
 use DateTimeInterface;
 use Doctrine\Common\Proxy\Proxy;
 use Doctrine\Common\Util\ClassUtils;
 use Doctrine\ORM\EntityManagerInterface;
-use Jane\Bundle\AutoMapperBundle\Configuration\MapperConfigurationInterface;
-use Jane\Component\AutoMapper\AutoMapperInterface;
-use Jane\Component\AutoMapper\MapperGeneratorMetadataInterface;
-use Jane\Component\AutoMapper\MapperMetadata;
 use MonsieurBiz\SyliusSearchPlugin\AutoMapper\ConfigurationInterface;
 use Sylius\Component\Core\Model\TaxonInterface;
 

@@ -13,11 +13,11 @@ declare(strict_types=1);
 
 namespace MonsieurBiz\SyliusSearchPlugin\AutoMapper;
 
+use AutoMapper\AutoMapperInterface;
+use AutoMapper\Bundle\Configuration\MapperConfigurationInterface;
+use AutoMapper\MapperGeneratorMetadataInterface;
+use AutoMapper\MapperMetadata;
 use DateTimeInterface;
-use Jane\Bundle\AutoMapperBundle\Configuration\MapperConfigurationInterface;
-use Jane\Component\AutoMapper\AutoMapperInterface;
-use Jane\Component\AutoMapper\MapperGeneratorMetadataInterface;
-use Jane\Component\AutoMapper\MapperMetadata;
 use MonsieurBiz\SyliusSearchPlugin\Context\ChannelSimulationContext;
 use MonsieurBiz\SyliusSearchPlugin\Entity\Product\SearchableInterface;
 use Sylius\Component\Core\Model\ChannelInterface;

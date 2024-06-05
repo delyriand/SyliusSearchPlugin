@@ -29,7 +29,7 @@ Change your `config/bundles.php` file to add this line for the plugin declaratio
 return [
     //..
     MonsieurBiz\SyliusSearchPlugin\MonsieurBizSyliusSearchPlugin::class => ['all' => true],
-    Jane\Bundle\AutoMapperBundle\JaneAutoMapperBundle::class => ['all' => true],
+    AutoMapper\Bundle\AutoMapperBundle::class => ['all' => true],
 ];
 ```
 
