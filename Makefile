@@ -69,11 +69,9 @@ setup_application:
 	(cd ${APP_DIR} && ${COMPOSER} config extra.symfony.allow-contrib true)
 	(cd ${APP_DIR} && ${COMPOSER} config minimum-stability dev)
 	(cd ${APP_DIR} && ${COMPOSER} config --no-plugins allow-plugins true)
+	(cd ${APP_DIR} && ${COMPOSER} config --no-plugins --json extra.symfony.endpoint '["https://api.github.com/repos/monsieurbiz/symfony-recipes/contents/index.json?ref=flex/master","flex://defaults"]')
 	(cd ${APP_DIR} && ${COMPOSER} require --no-install --no-scripts --no-progress sylius/sylius="~${SYLIUS_VERSION}") # Make sure to install the required version of sylius because the sylius-standard has a soft constraint
 	(cd ${APP_DIR} && ${COMPOSER} require --no-install --no-scripts --no-progress sylius/paypal-plugin="~${SYLIUS_PAYPAL_VERSION}") # @see https://github.com/Sylius/PayPalPlugin/issues/295
-	@if [ ${SYLIUS_VERSION} == '1.11.0' ]; then\
-		(cd ${APP_DIR} && ${COMPOSER} require --no-install --no-scripts --no-progress php-http/message-factory)\
-	fi
 	$(MAKE) ${APP_DIR}/.php-version ${APP_DIR}/php.ini
 	(cd ${APP_DIR} && ${COMPOSER} install --no-interaction)
 	$(MAKE) apply_dist
