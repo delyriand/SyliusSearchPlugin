@@ -68,7 +68,7 @@ class YamlWithLocaleProvider implements MappingProviderInterface
 
         $mapping = (array) $mappingProviderEvent->getMapping();
         if (empty($mapping['mappings'] ?? [])) {
-            throw new InvalidException(sprintf('Mapping no found for "%s" not found. Please check your configuration.', $indexName));
+            throw new InvalidException(\sprintf('Mapping no found for "%s" not found. Please check your configuration.', $indexName));
         }
 
         return $mapping;
@@ -81,7 +81,9 @@ class YamlWithLocaleProvider implements MappingProviderInterface
             $fileName = $context['filename'] ?? ($indexName . '_mapping.yaml');
             $mappingFilePath = $configurationDirectory . \DIRECTORY_SEPARATOR . $fileName;
 
-            $mapping = array_merge_recursive($mapping, $this->parser->parseFile($mappingFilePath));
+            /** @var array $parsedMapping */
+            $parsedMapping = $this->parser->parseFile($mappingFilePath) ?? [];
+            $mapping = array_merge_recursive($mapping, $parsedMapping);
         } catch (ParseException $exception) {
             // the mapping yaml file does not exist.
         }
@@ -107,6 +109,7 @@ class YamlWithLocaleProvider implements MappingProviderInterface
     private function appendAnalyzers(string $analyzerFilePath, array $mapping): array
     {
         try {
+            /** @var array $analyzer */
             $analyzer = $this->parser->parseFile($analyzerFilePath) ?? [];
             $mapping['settings']['analysis'] = array_merge_recursive($mapping['settings']['analysis'] ?? [], $analyzer);
         } catch (ParseException $exception) {

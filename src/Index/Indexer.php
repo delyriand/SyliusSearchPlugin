@@ -66,8 +66,8 @@ final class Indexer implements IndexerInterface
         /** @var DocumentableInterface $documentable */
         foreach ($this->documentableRegistry->all() as $documentable) {
             $documentable instanceof PrefixedDocumentableInterface && !empty($documentable->getPrefix()) ?
-                $output->writeln(sprintf('Indexing <info>%s</info> (Prefix: <info>%s</info>)', $documentable->getIndexCode(), $documentable->getPrefix()))
-                : $output->writeln(sprintf('Indexing <info>%s</info>', $documentable->getIndexCode()));
+                $output->writeln(\sprintf('Indexing <info>%s</info> (Prefix: <info>%s</info>)', $documentable->getIndexCode(), $documentable->getPrefix()))
+                : $output->writeln(\sprintf('Indexing <info>%s</info>', $documentable->getIndexCode()));
             $this->indexDocumentable($output, $documentable);
         }
     }
@@ -165,11 +165,11 @@ final class Indexer implements IndexerInterface
             foreach ($this->getLocales() as $localeCode) {
                 $documentable instanceof PrefixedDocumentableInterface && !empty($documentable->getPrefix()) ?
                     $output->writeln(
-                        sprintf('Indexing <info>%s</info> for locale <info>%s</info> (Prefix: <info>%s</info>)', $documentable->getIndexCode(), $localeCode, $documentable->getPrefix()),
+                        \sprintf('Indexing <info>%s</info> for locale <info>%s</info> (Prefix: <info>%s</info>)', $documentable->getIndexCode(), $localeCode, $documentable->getPrefix()),
                         OutputInterface::VERBOSITY_VERBOSE
                     )
                     : $output->writeln(
-                        sprintf('Indexing <info>%s</info> for locale <info>%s</info>', $documentable->getIndexCode(), $localeCode),
+                        \sprintf('Indexing <info>%s</info> for locale <info>%s</info>', $documentable->getIndexCode(), $localeCode),
                         OutputInterface::VERBOSITY_VERBOSE
                     );
 
@@ -187,6 +187,7 @@ final class Indexer implements IndexerInterface
 
         $indexer = $this->clientFactory->getIndexer($documentable, $locale);
         foreach ($documentable->getDatasource()->getItems($documentable->getSourceClass()) as $item) {
+            /** @var object $item */
             $item = $this->getRealEntity($item);
             if (null !== $locale && $item instanceof TranslatableInterface) {
                 $item->setCurrentLocale($locale);
@@ -198,10 +199,10 @@ final class Indexer implements IndexerInterface
         $indexer->flush();
 
         $indexBuilder->markAsLive($newIndex, $indexName);
-        $output->writeln(sprintf('Index <info>%s</info> is now live', $indexName), OutputInterface::VERBOSITY_VERBOSE);
+        $output->writeln(\sprintf('Index <info>%s</info> is now live', $indexName), OutputInterface::VERBOSITY_VERBOSE);
         $indexBuilder->speedUpRefresh($newIndex);
         $indexBuilder->purgeOldIndices($indexName);
-        $output->writeln(sprintf('Old indices for <info>%s</info> are now purged', $indexName), OutputInterface::VERBOSITY_VERBOSE);
+        $output->writeln(\sprintf('Old indices for <info>%s</info> are now purged', $indexName), OutputInterface::VERBOSITY_VERBOSE);
     }
 
     /**
@@ -221,9 +222,10 @@ final class Indexer implements IndexerInterface
         }
 
         // Clear the entity manager to detach the proxy object
-        $this->entityManager->clear(\get_class($entity)); /** @phpstan-ignore-line */
+        $this->entityManager->clear($entity::class); /** @phpstan-ignore-line */
         // Retrieve the original class name
-        $entityClassName = $this->entityManager->getClassMetadata(\get_class($entity))->rootEntityName;
+        $entityClassName = $this->entityManager->getClassMetadata($entity::class)->rootEntityName;
+
         // Find the object in repository from the ID
         return $this->entityManager->find($entityClassName, $entity->getId());
     }

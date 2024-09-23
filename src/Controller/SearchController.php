@@ -35,19 +35,19 @@ use Symfony\Component\Intl\Currencies;
 
 class SearchController extends AbstractController
 {
-    private Search $search;
+    protected Search $search;
 
-    private CurrencyContextInterface $currencyContext;
+    protected CurrencyContextInterface $currencyContext;
 
-    private LocaleContextInterface $localeContext;
+    protected LocaleContextInterface $localeContext;
 
-    private ChannelContextInterface $channelContext;
+    protected ChannelContextInterface $channelContext;
 
-    private SettingsInterface $searchSettings;
+    protected SettingsInterface $searchSettings;
 
-    private ServiceRegistryInterface $documentableRegistry;
+    protected ServiceRegistryInterface $documentableRegistry;
 
-    private ParametersParserInterface $parametersParser;
+    protected ParametersParserInterface $parametersParser;
 
     public function __construct(
         Search $search,
@@ -98,13 +98,14 @@ class SearchController extends AbstractController
      */
     public function postAction(Request $request): RedirectResponse
     {
-        $query = (array) $request->request->all()['monsieurbiz_searchplugin_search'] ?? [];
+        $query = (array) ($request->request->all()['monsieurbiz_searchplugin_search'] ?? []);
         $query = $query['query'] ?? '';
 
+        // With Apache a URL with a encoded slash (%2F) is provoking a 404 error on the server level
         return $this->redirect(
             $this->generateUrl(
                 'monsieurbiz_search_search',
-                ['query' => urlencode($query)]
+                ['query' => str_replace('%2F', '/', urlencode($query))]
             )
         );
     }
@@ -142,13 +143,15 @@ class SearchController extends AbstractController
         string $documentType = 'monsieurbiz_product'
     ): Response {
         $documentable = $this->getDocumentable($documentType);
+        /** @var array $syliusAttribute */
+        $syliusAttribute = $request->attributes->get('_sylius', []);
         $requestConfiguration = new RequestConfiguration(
             $request,
             RequestInterface::TAXON_TYPE,
             $documentable,
             $this->searchSettings,
             $this->channelContext,
-            new Parameters($this->parametersParser->parseRequestValues($request->attributes->get('_sylius', []), $request))
+            new Parameters($this->parametersParser->parseRequestValues($syliusAttribute, $request))
         );
         $result = $this->search->search($requestConfiguration);
 
@@ -159,7 +162,7 @@ class SearchController extends AbstractController
         ]);
     }
 
-    private function getDocumentable(?string $documentType): DocumentableInterface
+    protected function getDocumentable(?string $documentType): DocumentableInterface
     {
         if (null === $documentType) {
             $documentables = $this->getSearchEnabledDocumentables();
@@ -171,18 +174,18 @@ class SearchController extends AbstractController
             /** @phpstan-ignore-next-line */
             return $this->documentableRegistry->get('search.documentable.' . $documentType);
         } catch (NonExistingServiceException $exception) {
-            throw new NotFoundHttpException(sprintf('Documentable "%s" not found', $documentType));
+            throw new NotFoundHttpException(\sprintf('Documentable "%s" not found', $documentType));
         }
     }
 
-    private function getSearchEnabledDocumentables(): array
+    protected function getSearchEnabledDocumentables(): array
     {
         return array_filter($this->documentableRegistry->all(), function (DocumentableInterface $documentable) {
             return (bool) $this->searchSettings->getCurrentValue($this->channelContext->getChannel(), null, 'search_enabled__' . $documentable->getIndexCode());
         });
     }
 
-    private function getInstantSearchEnabledDocumentables(): array
+    protected function getInstantSearchEnabledDocumentables(): array
     {
         return array_filter($this->documentableRegistry->all(), function (DocumentableInterface $documentable) {
             return (bool) $this->searchSettings->getCurrentValue($this->channelContext->getChannel(), null, 'instant_search_enabled__' . $documentable->getIndexCode());
