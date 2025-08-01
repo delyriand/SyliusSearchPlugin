@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace MonsieurBiz\SyliusSearchPlugin\Index;
 
+use AutoMapper\AutoMapperInterface;
 use Doctrine\Common\Proxy\Proxy;
 use Doctrine\ORM\EntityManagerInterface;
 use Elastica\Document;
-use Jane\Component\AutoMapper\AutoMapperInterface;
 use JoliCode\Elastically\Indexer as ElasticallyIndexer;
 use MonsieurBiz\SyliusSearchPlugin\Model\Documentable\DocumentableInterface;
 use MonsieurBiz\SyliusSearchPlugin\Model\Documentable\PrefixedDocumentableInterface;
@@ -40,21 +40,18 @@ final class Indexer implements IndexerInterface
 
     private EntityManagerInterface $entityManager;
 
-    private AutoMapperInterface $autoMapper;
-
     private ClientFactory $clientFactory;
 
     public function __construct(
         ServiceRegistryInterface $documentableRegistry,
         ChannelRepositoryInterface $channelRepository,
         EntityManagerInterface $entityManager,
-        AutoMapperInterface $autoMapper,
+        private readonly AutoMapperInterface $autoMapper,
         ClientFactory $clientFactory
     ) {
         $this->documentableRegistry = $documentableRegistry;
         $this->channelRepository = $channelRepository;
         $this->entityManager = $entityManager;
-        $this->autoMapper = $autoMapper;
         $this->clientFactory = $clientFactory;
     }
 
