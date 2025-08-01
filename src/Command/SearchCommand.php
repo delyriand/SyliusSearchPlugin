@@ -21,6 +21,7 @@ use MonsieurBiz\SyliusSearchPlugin\Search\Search;
 use MonsieurBiz\SyliusSettingsPlugin\Settings\SettingsInterface;
 use Sylius\Component\Channel\Context\ChannelContextInterface;
 use Sylius\Component\Registry\ServiceRegistryInterface;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -30,10 +31,12 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
+#[AsCommand(
+    name: 'monsieurbiz:search:search',
+    description: 'Search for products in the search index',
+)]
 class SearchCommand extends Command
 {
-    protected static $defaultName = 'monsieurbiz:search:search';
-
     private Search $search;
 
     private RequestStack $requestStack;
@@ -67,7 +70,7 @@ class SearchCommand extends Command
         $this->addOption('channel', 'c', InputOption::VALUE_OPTIONAL, 'Channel code', 'FASHION_WEB');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
 
