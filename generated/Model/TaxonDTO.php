@@ -8,7 +8,7 @@ class TaxonDTO
      * @var array
      */
     protected $initialized = [];
-    public function isInitialized($property) : bool
+    public function isInitialized($property): bool
     {
         return array_key_exists($property, $this->initialized);
     }
@@ -41,7 +41,7 @@ class TaxonDTO
      *
      * @return string
      */
-    public function getName() : string
+    public function getName(): string
     {
         return $this->name;
     }
@@ -52,7 +52,7 @@ class TaxonDTO
      *
      * @return self
      */
-    public function setName(string $name) : self
+    public function setName(string $name): self
     {
         $this->initialized['name'] = true;
         $this->name = $name;
@@ -63,7 +63,7 @@ class TaxonDTO
      *
      * @return string
      */
-    public function getCode() : string
+    public function getCode(): string
     {
         return $this->code;
     }
@@ -74,7 +74,7 @@ class TaxonDTO
      *
      * @return self
      */
-    public function setCode(string $code) : self
+    public function setCode(string $code): self
     {
         $this->initialized['code'] = true;
         $this->code = $code;
@@ -85,7 +85,7 @@ class TaxonDTO
      *
      * @return int
      */
-    public function getPosition() : int
+    public function getPosition(): int
     {
         return $this->position;
     }
@@ -96,7 +96,7 @@ class TaxonDTO
      *
      * @return self
      */
-    public function setPosition(int $position) : self
+    public function setPosition(int $position): self
     {
         $this->initialized['position'] = true;
         $this->position = $position;
@@ -107,7 +107,7 @@ class TaxonDTO
      *
      * @return int
      */
-    public function getLevel() : int
+    public function getLevel(): int
     {
         return $this->level;
     }
@@ -118,7 +118,7 @@ class TaxonDTO
      *
      * @return self
      */
-    public function setLevel(int $level) : self
+    public function setLevel(int $level): self
     {
         $this->initialized['level'] = true;
         $this->level = $level;

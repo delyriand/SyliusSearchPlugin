@@ -8,7 +8,7 @@ class ProductAttributeDTO
      * @var array
      */
     protected $initialized = [];
-    public function isInitialized($property) : bool
+    public function isInitialized($property): bool
     {
         return array_key_exists($property, $this->initialized);
     }
@@ -35,7 +35,7 @@ class ProductAttributeDTO
      *
      * @return string
      */
-    public function getCode() : string
+    public function getCode(): string
     {
         return $this->code;
     }
@@ -46,7 +46,7 @@ class ProductAttributeDTO
      *
      * @return self
      */
-    public function setCode(string $code) : self
+    public function setCode(string $code): self
     {
         $this->initialized['code'] = true;
         $this->code = $code;
@@ -57,7 +57,7 @@ class ProductAttributeDTO
      *
      * @return string
      */
-    public function getName() : string
+    public function getName(): string
     {
         return $this->name;
     }
@@ -68,7 +68,7 @@ class ProductAttributeDTO
      *
      * @return self
      */
-    public function setName(string $name) : self
+    public function setName(string $name): self
     {
         $this->initialized['name'] = true;
         $this->name = $name;
@@ -90,7 +90,7 @@ class ProductAttributeDTO
      *
      * @return self
      */
-    public function setValue($value) : self
+    public function setValue($value): self
     {
         $this->initialized['value'] = true;
         $this->value = $value;

@@ -8,7 +8,7 @@ class PricingDTO
      * @var array
      */
     protected $initialized = [];
-    public function isInitialized($property) : bool
+    public function isInitialized($property): bool
     {
         return array_key_exists($property, $this->initialized);
     }
@@ -41,7 +41,7 @@ class PricingDTO
      *
      * @return string
      */
-    public function getChannelCode() : string
+    public function getChannelCode(): string
     {
         return $this->channelCode;
     }
@@ -52,7 +52,7 @@ class PricingDTO
      *
      * @return self
      */
-    public function setChannelCode(string $channelCode) : self
+    public function setChannelCode(string $channelCode): self
     {
         $this->initialized['channelCode'] = true;
         $this->channelCode = $channelCode;
@@ -63,7 +63,7 @@ class PricingDTO
      *
      * @return null|int
      */
-    public function getPrice() : ?int
+    public function getPrice(): ?int
     {
         return $this->price;
     }
@@ -74,7 +74,7 @@ class PricingDTO
      *
      * @return self
      */
-    public function setPrice(?int $price) : self
+    public function setPrice(?int $price): self
     {
         $this->initialized['price'] = true;
         $this->price = $price;
@@ -85,7 +85,7 @@ class PricingDTO
      *
      * @return null|int
      */
-    public function getOriginalPrice() : ?int
+    public function getOriginalPrice(): ?int
     {
         return $this->originalPrice;
     }
@@ -96,7 +96,7 @@ class PricingDTO
      *
      * @return self
      */
-    public function setOriginalPrice(?int $originalPrice) : self
+    public function setOriginalPrice(?int $originalPrice): self
     {
         $this->initialized['originalPrice'] = true;
         $this->originalPrice = $originalPrice;
@@ -107,7 +107,7 @@ class PricingDTO
      *
      * @return bool
      */
-    public function getPriceReduced() : bool
+    public function getPriceReduced(): bool
     {
         return $this->priceReduced;
     }
@@ -118,7 +118,7 @@ class PricingDTO
      *
      * @return self
      */
-    public function setPriceReduced(bool $priceReduced) : self
+    public function setPriceReduced(bool $priceReduced): self
     {
         $this->initialized['priceReduced'] = true;
         $this->priceReduced = $priceReduced;
