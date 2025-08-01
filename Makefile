@@ -1,7 +1,7 @@
 .DEFAULT_GOAL := help
 SHELL=/bin/bash
 APP_DIR=tests/Application
-SYLIUS_VERSION=1.14.0
+SYLIUS_VERSION=2.1.0
 SYMFONY=cd ${APP_DIR} && symfony
 COMPOSER=symfony composer
 CONSOLE=${SYMFONY} console
@@ -77,8 +77,7 @@ setup_application:
 	$(MAKE) ${APP_DIR}/php.ini
 	(cd ${APP_DIR} && ${COMPOSER} install --no-interaction)
 	$(MAKE) apply_dist
-	(cd ${APP_DIR} && ${COMPOSER} require --no-install --no-scripts --no-progress nikic/php-parser="^4.0") # Required by jane-php/automapper
-	(cd ${APP_DIR} && ${COMPOSER} require --no-progress --no-interaction monsieurbiz/${PLUGIN_NAME}="*@dev")
+	(cd ${APP_DIR} && ${COMPOSER} require --no-progress --no-interaction --no-scripts monsieurbiz/${PLUGIN_NAME}="*@dev")
 	git restore dist/docker-compose.override.yaml # Restore dist file to prevent modification by flex recipes (symfony/mailer)
 	rm -rf ${APP_DIR}/var/cache
 
