@@ -19,10 +19,10 @@ services:
         tags: ['controller.service_arguments']
 
     # Add short_description in indexed data with the logic to get the value
-    App\Search\Automapper\DecorateProductMapperConfiguration:
-        decorates: MonsieurBiz\SyliusSearchPlugin\AutoMapper\ProductMapperConfiguration
-        arguments:
-            - '@.inner'
+#    App\Search\Automapper\DecorateProductMapperConfiguration:
+#        decorates: MonsieurBiz\SyliusSearchPlugin\AutoMapper\ProductMapperConfiguration
+#        arguments:
+#            - '@.inner'
 
     # Define sorters
     App\Search\Request\Sorting\Product\ShortDescriptionSorter:
