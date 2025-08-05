@@ -5,6 +5,11 @@ monsieurbiz_sylius_search:
   documents:
     monsieurbiz_product:
       prefix: 'myprefix' # define a custom index prefix
+      target: 'App\Search\Model\Product\ProductDTO'
 
   elastically_configuration_paths:
     - '%kernel.project_dir%/src/Resources/config/elasticsearch'
+
+  automapper_classes:
+      targets:
+          product: 'App\Search\Model\Product\ProductDTO'
