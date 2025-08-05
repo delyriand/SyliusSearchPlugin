@@ -61,4 +61,9 @@ final class Configuration implements ConfigurationInterface
 
         return $this->targetClasses[$identifier];
     }
+
+    public function getTargetClasses(): array
+    {
+        return $this->targetClasses;
+    }
 }

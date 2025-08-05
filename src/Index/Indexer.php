@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace MonsieurBiz\SyliusSearchPlugin\Index;
 
 use AutoMapper\AutoMapperInterface;
+use AutoMapper\MapperContext;
 use Doctrine\Common\Proxy\Proxy;
 use Doctrine\ORM\EntityManagerInterface;
 use Elastica\Document;
@@ -201,7 +202,7 @@ final class Indexer implements IndexerInterface
             }
 
             // @phpstan-ignore-next-line
-            $indexer->scheduleIndex($newIndex, new Document((string) $dto->getId(), $dto));
+            $indexer->scheduleIndex($newIndex, new Document((string) $dto->id, $dto));
         }
         $indexer->flush();
 

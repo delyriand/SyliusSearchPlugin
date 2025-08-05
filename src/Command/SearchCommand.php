@@ -35,7 +35,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
     name: 'monsieurbiz:search:search',
     description: 'Search for products in the search index',
 )]
-class SearchCommand extends Command
+class   SearchCommand extends Command
 {
     private Search $search;
 
@@ -95,7 +95,8 @@ class SearchCommand extends Command
         foreach ($result->getIterator() as $resultItem) {
             /** @var ProductDTO $productDTO */
             $productDTO = $resultItem->getModel();
-            $documents[] = [$resultItem->getScore(), $productDTO->getData('id')];
+            $documents[] = [$resultItem->getScore(), $productDTO->id];
+            dump($productDTO);
         }
         $io->table(['Score', 'Document ID'], $documents);
 

@@ -18,4 +18,6 @@ interface ConfigurationInterface
     public function getSourceClass(string $identifier): string;
 
     public function getTargetClass(string $identifier): string;
+
+    public function getTargetClasses(): array;
 }
