@@ -1,0 +1,13 @@
+automapper:
+    mapping:
+        mappers:
+            -   source: '%sylius.model.product.class%'
+                target: 'MonsieurBiz\SyliusSearchPlugin\Model\Product\ProductDTO'
+                reverse: false
+            -   source: '%sylius.model.product_variant.class%'
+                target: 'MonsieurBiz\SyliusSearchPlugin\Model\Product\VariantDTO'
+                reverse: false
+            -   source: '%sylius.model.product_attribute_value.class%'
+                target: 'MonsieurBiz\SyliusSearchPlugin\Generated\Model\ProductAttributeDTO'
+                reverse: false
+
